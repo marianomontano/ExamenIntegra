@@ -8,6 +8,10 @@ namespace Integra.Models
 {
 	public class IntegraDb : DbContext
 	{
+		public IntegraDb() : base("Data Source=.;Initial Catalog=IntegraComex;Integrated Security=True")
+		{ 
+		}
 
+		public virtual DbSet<Cliente> Clientes { get; set; }
 	}
 }
