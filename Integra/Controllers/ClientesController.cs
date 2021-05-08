@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net;
 using System.Data.Entity;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Integra.Controllers
 {
@@ -130,5 +132,20 @@ namespace Integra.Controllers
                 return View();
             }
         }
+
+        public string ObtenerRazonSocial(string cuit)
+		{
+            string razonSocial = "";
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
+            var response = client.GetAsync($"https://sistemaintegracomex.com.ar/Account/GetNombreByCuit?cuit={cuit}").Result;
+			if (response.IsSuccessStatusCode)
+			{
+                razonSocial = response.Content.ReadAsStringAsync().Result;
+			}
+
+            return razonSocial;
+		}
     }
 }

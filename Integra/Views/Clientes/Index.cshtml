@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Crear Nuevo Cliente", "Create", null, new { @class = "btn btn-primary" })
 </p>
-<table class="table">
+<table class="table table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Cuit)
@@ -47,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.Activo)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Detalles", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.Id })
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.Id }, new { @class = "btn btn-default" }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.Id }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }

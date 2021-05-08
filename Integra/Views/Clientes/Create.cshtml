@@ -26,9 +26,11 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RazonSocial, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RazonSocial, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
-                <button class="btn btn-primary" id="btnRazonSocial">Obtener Razón Social</button>
+                <div>
+                    @Html.EditorFor(model => model.RazonSocial, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
+                </div>
+                <a href="#" class="btn btn-primary" id="btnRazonSocial">Obtener Razón Social</a>
             </div>
         </div>
 
@@ -71,8 +73,22 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval");
+    @Scripts.Render("~/bundles/jquery");
     <script type="text/javascript">
-
+        $('#btnRazonSocial').click(function () {
+            var cuit = $('#Cuit')[0].value;
+            var apiUrl = `/Clientes/ObtenerRazonSocial?cuit=${cuit}`;
+            if (cuit == '' || cuit == null || cuit === 'null') {
+                alert('Por favor, ingrese un Cuit válido.')
+            }
+            $.ajax({
+                url: apiUrl,
+                method: 'get',
+                timeout: 0
+            }).done(function (data) {
+                $('#RazonSocial')[0].value = data;
+            });
+        });        
     </script>
 }
