@@ -90,13 +90,12 @@ namespace Integra.Controllers
                     return View(cliente);
 				}
 
-                clienteviejo = cliente;
-                db.Entry(clienteviejo).State = EntityState.Modified;
+                db.Entry(clienteviejo).CurrentValues.SetValues(cliente);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
@@ -105,20 +104,28 @@ namespace Integra.Controllers
         // GET: Clientes/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var cliente = db.Clientes.Find(id);
+            return View(cliente);
         }
 
         // POST: Clientes/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Cliente cliente)
         {
             try
             {
-                // TODO: Add delete logic here
+                var eliminar = db.Clientes.Find(id);
+                if(eliminar == null)
+				{
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+				}
+
+                db.Clientes.Remove(eliminar);
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
